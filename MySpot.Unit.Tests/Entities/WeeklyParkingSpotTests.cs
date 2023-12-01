@@ -58,7 +58,7 @@ namespace MySpot.Unit.Tests.Entities
         }
 
         [Fact]
-        public void AddReservation_ForNotGivenDate_ShouldSucceed()
+        public void AddReservation_ForNotExistingDate_ShouldSucceed()
         {
             // Arrange
             var reservation = new Reservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", _now.AddDays(1));
