@@ -11,14 +11,12 @@ namespace MySpot.Api.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private static readonly Clock _clock = new();
-        private readonly ReservationsService _service = new([
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(_clock.Current()), "P1"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), new Week(_clock.Current()), "P2"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), new Week(_clock.Current()), "P3"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000004"), new Week(_clock.Current()), "P4"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000005"), new Week(_clock.Current()), "P5"),
-        ]);
+        private readonly IReservationsService _service;
+
+        public ReservationsController(IReservationsService reservationsService)
+        {
+            _service = reservationsService;
+        }
 
         [HttpGet]
         public ActionResult<IEnumerable<Reservation>> Get() => Ok(_service.GetAllWeekly());
