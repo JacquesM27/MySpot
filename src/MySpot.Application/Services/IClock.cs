@@ -1,4 +1,4 @@
-﻿namespace MySpot.Application.Time
+﻿namespace MySpot.Application.Services
 {
     public interface IClock
     {

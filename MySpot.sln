@@ -9,13 +9,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Api", "src\MySpot.Ap
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3EA810D9-9E41-4F2A-84EF-AE8026651EFA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Unit.Tests", "MySpot.Unit.Tests\MySpot.Unit.Tests.csproj", "{0B2DA7B5-4870-4364-AA1F-263C4892EB07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Unit.Tests", "tests\MySpot.Unit.Tests\MySpot.Unit.Tests.csproj", "{0B2DA7B5-4870-4364-AA1F-263C4892EB07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Core", "MySpot.Core\MySpot.Core.csproj", "{736441E5-2CC1-484D-AC87-9F0D34E6CFBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Core", "src\MySpot.Core\MySpot.Core.csproj", "{736441E5-2CC1-484D-AC87-9F0D34E6CFBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Application", "MySpot.Application\MySpot.Application.csproj", "{8386E022-EE5E-4EE5-A118-49922ADE2A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Application", "src\MySpot.Application\MySpot.Application.csproj", "{8386E022-EE5E-4EE5-A118-49922ADE2A43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Infrastructure", "MySpot.Infrastructure\MySpot.Infrastructure.csproj", "{A33CAF41-8CAE-4802-A98E-55272A6188E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySpot.Infrastructure", "src\MySpot.Infrastructure\MySpot.Infrastructure.csproj", "{A33CAF41-8CAE-4802-A98E-55272A6188E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6EEE00B9-0BDD-43BC-B9CF-3FCBE5064C58}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
