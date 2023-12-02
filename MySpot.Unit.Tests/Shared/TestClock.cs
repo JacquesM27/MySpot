@@ -1,4 +1,4 @@
-﻿using MySpot.Api.Services;
+﻿using MySpot.Application.Time;
 
 namespace MySpot.Unit.Tests.Shared
 {
