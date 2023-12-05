@@ -19,6 +19,8 @@ namespace MySpot.Core.Entities
             Name = name;
         }
 
+        private WeeklyParkingSpot() { }
+
         public void AddReservation(Reservation reservation, Date now)
         {
             var isInvalidDate = reservation.Date < Week.From ||

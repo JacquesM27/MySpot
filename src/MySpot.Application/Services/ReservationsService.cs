@@ -40,6 +40,7 @@ namespace MySpot.Application.Services
 
             var reservation = new Reservation(command.ReservationId, command.ParkingSpotId, command.EmployeeName, command.LicensePlate, new Date(command.Date));
             weeklyParkingSpot.AddReservation(reservation, new Date(_clock.Current()));
+            _repository.Update(weeklyParkingSpot);
 
             return reservation.Id;
         }
@@ -58,6 +59,7 @@ namespace MySpot.Application.Services
                 return false;
 
             existingReservation.ChangeLicensePlate(command.LicensePlate);
+            _repository.Update(weeklyParkingSpot);
             return true;
         }
 
@@ -72,6 +74,7 @@ namespace MySpot.Application.Services
                 return false;
 
             weeklyParkingSpot.RemoveReservation(command.ReservationId);
+            _repository.Delete(weeklyParkingSpot);
             return true;
         }
 

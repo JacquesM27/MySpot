@@ -1,6 +1,4 @@
-﻿
-
-using MySpot.Core.ValueObjects;
+﻿using MySpot.Core.ValueObjects;
 
 namespace MySpot.Core.Entities
 {
@@ -20,6 +18,8 @@ namespace MySpot.Core.Entities
             ChangeLicensePlate(licensePlate);
             Date = date;
         }
+
+        private Reservation() { }
 
         public void ChangeLicensePlate(LicensePlate licensePlate)
             => LicensePlate = licensePlate;
