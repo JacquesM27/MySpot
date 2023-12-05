@@ -14,16 +14,16 @@
         public static implicit operator Date(DateTimeOffset value) => new(value);
 
         public static bool operator <(Date date1, Date date2)
-            => date1.Value < date2.Value;
+            => date1.Value.Date < date2.Value.Date;
 
         public static bool operator >(Date date1, Date date2)
-            => date1.Value > date2.Value;
+            => date1.Value.Date > date2.Value.Date;
 
         public static bool operator <=(Date date1, Date date2)
-            => date1.Value <= date2.Value;
+            => date1.Value.Date <= date2.Value.Date;
 
         public static bool operator >=(Date date1, Date date2)
-            => date1.Value >= date2.Value;
+            => date1.Value.Date >= date2.Value.Date;
 
         public static Date Now => new(DateTimeOffset.Now);
 

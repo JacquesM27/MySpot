@@ -1,6 +1,9 @@
 @MySpot.Api_HostAddress = http://localhost:5000
-@reservationId = ac3bd958-edf4-4040-93ff-3f4b0b83d2f3
+@reservationId = 28b738e8-ea23-4d68-92f0-f7e8a821be4a
 @parkingSpotId = 00000000-0000-0000-0000-000000000001
+
+###
+GET {{MySpot.Api_HostAddress}}
 
 ### 
 GET {{MySpot.Api_HostAddress}}/reservations
