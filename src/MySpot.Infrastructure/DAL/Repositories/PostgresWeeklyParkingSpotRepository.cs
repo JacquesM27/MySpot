@@ -14,32 +14,34 @@ namespace MySpot.Infrastructure.DAL.Repositories
             _dbContext = dbContext;
         }
 
-        public void AddReservation(WeeklyParkingSpot spot)
+        public async Task AddAsync(WeeklyParkingSpot spot)
         {
-            _dbContext.Add(spot);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(spot);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Delete(WeeklyParkingSpot spot)
+        public async Task DeleteAsync(WeeklyParkingSpot spot)
         {
             _dbContext.Remove(spot);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public WeeklyParkingSpot? Get(ParkingSpotId id)
+        public Task<WeeklyParkingSpot?> GetAsync(ParkingSpotId id)
             => _dbContext.WeeklyParkingSpots
                 .Include(x => x.Reservations)//eager loading
-                .SingleOrDefault(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
 
-        public IEnumerable<WeeklyParkingSpot> GetAll()
-            => _dbContext.WeeklyParkingSpots
+        public async Task<IEnumerable<WeeklyParkingSpot>> GetAllAsync()
+        {
+            var result = await _dbContext.WeeklyParkingSpots
                 .Include(x => x.Reservations)//eager loading
-                .ToList();
-
-        public void Update(WeeklyParkingSpot spot)
+                .ToListAsync();
+            return result;
+        }
+        public async Task UpdateAsync(WeeklyParkingSpot spot)
         {
             _dbContext.Update(spot);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

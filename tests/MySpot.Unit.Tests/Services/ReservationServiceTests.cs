@@ -24,13 +24,14 @@ namespace MySpot.Unit.Tests.Services
         #endregion
 
         [Fact]
-        public void Create_ForNotExistingDate_ShouldSucceed()
+        public async Task Create_ForNotExistingDate_ShouldSucceed()
         {
             // Arrange
-            var command = new CreateReservation(_weeklyParkingSpotRepository.GetAll().First().Id,Guid.NewGuid(), _clock.Current().AddMinutes(5), "John Doe", "XYZ123");
+            var parkingSpots = await _weeklyParkingSpotRepository.GetAllAsync();
+            var command = new CreateReservation(parkingSpots.First().Id,Guid.NewGuid(), _clock.Current().AddMinutes(5), "John Doe", "XYZ123");
 
             // Act
-            var reservationId = _reservationService.Create(command);
+            var reservationId = await _reservationService.CreateAsync(command);
 
             // Assert
             reservationId.ShouldNotBeNull();
