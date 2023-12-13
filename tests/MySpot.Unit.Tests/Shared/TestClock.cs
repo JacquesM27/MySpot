@@ -1,4 +1,4 @@
-﻿using MySpot.Application.Services;
+﻿using MySpot.Core.Abstractions;
 
 namespace MySpot.Unit.Tests.Shared
 {
