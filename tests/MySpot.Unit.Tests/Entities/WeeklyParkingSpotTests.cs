@@ -11,6 +11,7 @@ namespace MySpot.Unit.Tests.Entities
         #region Arrange
         private readonly WeeklyParkingSpot _spot;
         private readonly Date _now;
+
         public WeeklyParkingSpotTests()
         {
             _now = new Date(new DateTime(2023, 11, 29));
@@ -25,7 +26,7 @@ namespace MySpot.Unit.Tests.Entities
         {
             // Arrange
             var invalidDate = DateTime.Parse(dateString);
-            var reservation = new Reservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", new Date(invalidDate));
+            var reservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", new Date(invalidDate));
 
             // Act
             var exception = Record.Exception(() => _spot.AddReservation(reservation, _now));
@@ -39,9 +40,9 @@ namespace MySpot.Unit.Tests.Entities
         public void AddReservation_ForAlreadyExistingDate_ShouldFail()
         {
             // Arrange
-            var reservation = new Reservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", _now.AddDays(1));
+            var reservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", _now.AddDays(1));
             _spot.AddReservation(reservation, _now);
-            var nextReservation = new Reservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", _now.AddDays(1));
+            var nextReservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", _now.AddDays(1));
 
             // Act
             var exception = Record.Exception(() => _spot.AddReservation(nextReservation, _now));
@@ -55,7 +56,7 @@ namespace MySpot.Unit.Tests.Entities
         public void AddReservation_ForNotExistingDate_ShouldSucceed()
         {
             // Arrange
-            var reservation = new Reservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", _now.AddDays(1));
+            var reservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", _now.AddDays(1));
 
             // Act
             _spot.AddReservation(reservation, _now);

@@ -14,14 +14,22 @@ GET {{MySpot.Api_HostAddress}}/reservations/{{reservationId}}
 Accept: application/json
 
 ### 
-POST {{MySpot.Api_HostAddress}}/reservations
+POST {{MySpot.Api_HostAddress}}/reservations/vehicle
 Content-Type: application/json
 
 {
     "parkingSpotId": "{{parkingSpotId}}",
-    "date": "2023-12-06",
+    "date": "2023-12-16",
     "employeeName": "John Doe",
     "licensePlate": "XYZ123"
+}
+
+### 
+POST {{MySpot.Api_HostAddress}}/reservations/cleaning
+Content-Type: application/json
+
+{
+    "date": "2023-12-16"
 }
 
 ### 

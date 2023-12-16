@@ -39,13 +39,10 @@ namespace MySpot.Core.Entities
             _reservations.Add(reservation);
         }
 
-        public void RemoveReservation(ReservationId reservationId)
-        {
-            var item = _reservations.SingleOrDefault(x => x.Id == reservationId);
-            if (item is null)
-                return;
+        public void RemoveReservation(ReservationId reservationId) 
+            => _reservations.RemoveWhere(x => x.Id == reservationId);
 
-            _reservations.Remove(item);
-        }
+        public void RemoveReservations(IEnumerable<Reservation> reservations)
+            => _reservations.RemoveWhere(x => reservations.Any(r => r.Id == x.Id));
     }
 }

@@ -15,14 +15,13 @@ namespace MySpot.Infrastructure.DAL.Configurations
             builder.Property(x => x.ParkingSpotId)
                 .HasConversion(x => x.Value, y => y);
 
-            builder.Property(x => x.EmployeeName)
-                .HasConversion(x => x.Value, y => y);
-
-            builder.Property(x => x.LicensePlate)
-                .HasConversion(x => x.Value, y => y);
-
             builder.Property(x => x.Date)
                 .HasConversion(x => x.Value, y => y);
+
+            builder
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<CleaningReservation>(nameof(CleaningReservation))
+                .HasValue<VehicleReservation>(nameof(VehicleReservation));
         }
     }
 }

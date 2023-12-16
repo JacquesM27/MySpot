@@ -42,5 +42,10 @@ namespace MySpot.Infrastructure.DAL.Repositories
 
         public Task UpdateAsync(WeeklyParkingSpot spot) 
             => Task.CompletedTask;
+
+        public Task<IEnumerable<WeeklyParkingSpot>> GetByWeekAsync(Week week)
+        {
+            return GetAllAsync();
+        }
     }
 }

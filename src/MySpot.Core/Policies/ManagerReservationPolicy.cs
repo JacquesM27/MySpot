@@ -1,5 +1,4 @@
-﻿using MySpot.Core.Abstractions;
-using MySpot.Core.Entities;
+﻿using MySpot.Core.Entities;
 using MySpot.Core.ValueObjects;
 
 namespace MySpot.Core.Policies
@@ -13,6 +12,7 @@ namespace MySpot.Core.Policies
         {
             var totalEmployeeReservations = weeklyParkingSpots
                .SelectMany(x => x.Reservations)
+               .OfType<VehicleReservation>()
                .Count(x => x.EmployeeName == employeeName);
 
             return totalEmployeeReservations <= 4;
