@@ -15,7 +15,12 @@ namespace MySpot.Infrastructure.DAL.Configurations
             builder.Property(x => x.Week)
                 .HasConversion(x => x.To.Value, y => new Core.ValueObjects.Week(y));
 
-            builder.Property(x => x.Name);
+            builder.Property(x => x.Name)
+                .HasConversion(x => x.Value, y => y);
+
+            builder.Property(x => x.Capacity)
+                .IsRequired(true)
+                .HasConversion(x => x.Value, y => y);
         }
     }
 }

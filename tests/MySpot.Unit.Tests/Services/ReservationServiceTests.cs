@@ -40,7 +40,7 @@ namespace MySpot.Unit.Tests.Services
         {
             // Arrange
             var parkingSpots = await _weeklyParkingSpotRepository.GetAllAsync();
-            var command = new ReserveParkingSpotForVehicle(parkingSpots.First().Id,Guid.NewGuid(), _clock.Current().AddMinutes(5), "John Doe", "XYZ123");
+            var command = new ReserveParkingSpotForVehicle(parkingSpots.First().Id,Guid.NewGuid(), 1, _clock.Current().AddMinutes(5), "John Doe", "XYZ123");
 
             // Act
             var reservationId = await _reservationService.ReserveForVehicleAsync(command);

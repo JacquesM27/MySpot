@@ -15,6 +15,10 @@ namespace MySpot.Infrastructure.DAL.Configurations
             builder.Property(x => x.ParkingSpotId)
                 .HasConversion(x => x.Value, y => y);
 
+            builder.Property(x => x.Capacity)
+                .IsRequired(true)
+                .HasConversion(x => x.Value, y => y);
+
             builder.Property(x => x.Date)
                 .HasConversion(x => x.Value, y => y);
 

@@ -52,9 +52,9 @@ namespace MySpot.Application.Services
             if (parkingSpotToReserve is null)
                 return default;
 
-            var reservation = new VehicleReservation(command.ReservationId, parkingSpotId, command.EmployeeName, command.LicensePlate, new Date(command.Date));
+            var reservation = new VehicleReservation(command.ReservationId, parkingSpotId, command.EmployeeName, command.LicensePlate, command.Capacity, new Date(command.Date));
 
-            _parkingReservationService.ReserveSpotForVehicle(weeklyParkingSpots, JobTitle.Employee, parkingSpotToReserve, reservation);
+            _parkingReservationService.ReserveSpotForVehicle(weeklyParkingSpots, JobTitle.Boss, parkingSpotToReserve, reservation);
             await _repository.UpdateAsync(parkingSpotToReserve);
 
             return reservation.Id;
