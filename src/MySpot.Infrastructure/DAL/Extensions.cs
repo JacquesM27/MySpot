@@ -21,7 +21,6 @@ namespace MySpot.Infrastructure.DAL
             services.AddScoped<IWeeklyParkingSpotRepository, PostgresWeeklyParkingSpotRepository>();
             services.AddScoped<IUnitOfWork, PostgresUnitOfWork>();
             services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
-            services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
             services.AddHostedService<DatabaseInitializer>();
 
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
