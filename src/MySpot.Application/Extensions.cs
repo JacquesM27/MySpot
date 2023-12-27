@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySpot.Application.Services;
+using MySpot.Application.Abstractions;
 
 namespace MySpot.Application
 {
@@ -7,7 +7,12 @@ namespace MySpot.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IReservationsService, ReservationsService>();
+            var appAssembly = typeof(ICommandHandler<>).Assembly;
+            services.Scan(x => x.FromAssemblies(appAssembly)
+                .AddClasses(y => y.AssignableTo(typeof(ICommandHandler<>)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
+            );
 
             return services;
         }

@@ -1,40 +1,35 @@
 @MySpot.Api_HostAddress = http://localhost:5000
 @reservationId = ace15ae8-44f3-4896-9aaf-b520e73269e9
-@parkingSpotId = 00000000-0000-0000-0000-000000000003
+@parkingSpotId = 00000000-0000-0000-0000-000000000001
 
 ###
 GET {{MySpot.Api_HostAddress}}
 
 ### 
-GET {{MySpot.Api_HostAddress}}/reservations
+GET {{MySpot.Api_HostAddress}}/parking-spots
 Accept: application/json
 
 ### 
-GET {{MySpot.Api_HostAddress}}/reservations/{{reservationId}}
-Accept: application/json
-
-### 
-POST {{MySpot.Api_HostAddress}}/reservations/vehicle
+POST {{MySpot.Api_HostAddress}}/parking-spots/{{parkingSpotId}}/reservations/vehicle
 Content-Type: application/json
 
 {
-    "parkingSpotId": "{{parkingSpotId}}",
     "capacity": 1,
-    "date": "2023-12-17",
+    "date": "2023-12-27",
     "employeeName": "John Doe",
     "licensePlate": "XYZ124"
 }
 
 ### 
-POST {{MySpot.Api_HostAddress}}/reservations/cleaning
+POST {{MySpot.Api_HostAddress}}/parking-spots/reservations/cleaning
 Content-Type: application/json
 
 {
-    "date": "2023-12-17"
+    "date": "2023-12-27"
 }
 
 ### 
-PUT {{MySpot.Api_HostAddress}}/reservations/{{reservationId}}
+PUT {{MySpot.Api_HostAddress}}/parking-spots/reservations/{{reservationId}}
 Content-Type: application/json
 
 {
@@ -42,4 +37,4 @@ Content-Type: application/json
 }
 
 ### 
-DELETE {{MySpot.Api_HostAddress}}/reservations/{{reservationId}}
+DELETE {{MySpot.Api_HostAddress}}/parking-spots/reservations/{{reservationId}}
