@@ -8,6 +8,13 @@ namespace MySpot.Infrastructure.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<VehicleReservation> builder)
         {
+            builder.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId);
+            builder.Property(x => x.UserId)
+                .IsRequired()
+                .HasConversion(x => x.Value, y => y);
+
             builder.Property(x => x.EmployeeName)
                .HasConversion(x => x.Value, y => y);
 

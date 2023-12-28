@@ -10,7 +10,8 @@ namespace MySpot.Application.Commands.Handlers
 {
     internal sealed class ReserveParkingSpotForVehicleHandler(IClock clock,
                                                              IWeeklyParkingSpotRepository repository,
-                                                             IParkingReservationService parkingReservationService)
+                                                             IParkingReservationService parkingReservationService,
+                                                             IUserRepository userRepository)
         : ICommandHandler<ReserveParkingSpotForVehicle>
     {
 
@@ -24,7 +25,10 @@ namespace MySpot.Application.Commands.Handlers
             var parkingSpotToReserve = weeklyParkingSpots.SingleOrDefault(x => x.Id == parkingSpotId) 
                 ?? throw new WeeklyParkingSpotNotFoundExeption(parkingSpotId);
 
-            var reservation = new VehicleReservation(command.ReservationId, parkingSpotId, command.EmployeeName,
+            var user = await userRepository.GetByIdAsync(command.UserId)
+                ?? throw new UserNotFoundException(command.UserId);
+
+            var reservation = new VehicleReservation(command.ReservationId, user.Id, parkingSpotId, new EmployeeName(user.Fullname),
                 command.LicensePlate, command.Capacity, new Date(command.Date));
 
             parkingReservationService.ReserveSpotForVehicle(weeklyParkingSpots, JobTitle.Boss, parkingSpotToReserve, reservation);

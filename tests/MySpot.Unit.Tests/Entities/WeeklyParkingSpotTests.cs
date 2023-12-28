@@ -26,7 +26,7 @@ namespace MySpot.Unit.Tests.Entities
         {
             // Arrange
             var invalidDate = DateTime.Parse(dateString);
-            var reservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 1, new Date(invalidDate));
+            var reservation = new VehicleReservation(Guid.NewGuid(), Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 1, new Date(invalidDate));
 
             // Act
             var exception = Record.Exception(() => _spot.AddReservation(reservation, _now));
@@ -40,9 +40,9 @@ namespace MySpot.Unit.Tests.Entities
         public void AddReservation_ForAlreadyReservedParkingSpot_ShouldFail()
         {
             // Arrange
-            var reservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 2, _now.AddDays(1));
+            var reservation = new VehicleReservation(Guid.NewGuid(), Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 2, _now.AddDays(1));
             _spot.AddReservation(reservation, _now);
-            var nextReservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 1, _now.AddDays(1));
+            var nextReservation = new VehicleReservation(Guid.NewGuid(), Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 1, _now.AddDays(1));
 
             // Act
             var exception = Record.Exception(() => _spot.AddReservation(nextReservation, _now));
@@ -56,7 +56,7 @@ namespace MySpot.Unit.Tests.Entities
         public void AddReservation_ForNotReservedParkignSpot_ShouldSucceed()
         {
             // Arrange
-            var reservation = new VehicleReservation(Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 2, _now.AddDays(1));
+            var reservation = new VehicleReservation(Guid.NewGuid(), Guid.NewGuid(), _spot.Id, "John Doe", "XYZ123", 2, _now.AddDays(1));
 
             // Act
             _spot.AddReservation(reservation, _now);
