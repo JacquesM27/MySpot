@@ -1,6 +1,7 @@
 @MySpot.Api_HostAddress = http://localhost:5000
 @reservationId = ace15ae8-44f3-4896-9aaf-b520e73269e9
 @parkingSpotId = 00000000-0000-0000-0000-000000000002
+@userId = 5b784299-561e-4e91-982a-444887a6f6a9
 
 ###
 GET {{MySpot.Api_HostAddress}}
@@ -38,3 +39,21 @@ Content-Type: application/json
 
 ### 
 DELETE {{MySpot.Api_HostAddress}}/parking-spots/reservations/{{reservationId}}
+
+###
+POST {{MySpot.Api_HostAddress}}/users
+Content-Type: application/json
+
+{
+    "email" : "user1@myspot.io",
+    "username": "user1",
+    "password": "secret",
+    "fullname": "John Doe",
+    "role": "user"
+}
+
+###
+GET {{MySpot.Api_HostAddress}}/users
+
+###
+GET {{MySpot.Api_HostAddress}}/users/{{userId}}
