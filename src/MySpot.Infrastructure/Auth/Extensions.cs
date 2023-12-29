@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MySpot.Application.Security;
 using MySpot.Infrastructure.DAL;
@@ -55,12 +56,15 @@ namespace MySpot.Infrastructure.Auth
         public int MinimumAge => minimumAge;
     }
 
-    public class MinimumAgeHandler : AuthorizationHandler<MinimumAgeRequirement>
+    public class MinimumAgeHandler(IOptions<AuthOptions> options)
+        : AuthorizationHandler<MinimumAgeRequirement>
     {
+        private readonly string _issuer = options.Value.Issuer;
+
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, MinimumAgeRequirement requirement)
         {
             var dateOfBirth = context.User.FindFirst(
-                c => c.Type == ClaimTypes.DateOfBirth && c.Issuer == "MySpot-Issuer");
+                c => c.Type == ClaimTypes.DateOfBirth && c.Issuer == _issuer);
 
             if (dateOfBirth is null)
                 return Task.CompletedTask;
