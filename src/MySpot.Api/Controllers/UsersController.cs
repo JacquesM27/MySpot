@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MySpot.Application.Abstractions;
 using MySpot.Application.Commands;
 using MySpot.Application.DTO;
 using MySpot.Application.Queries;
+using MySpot.Application.Security;
 
 namespace MySpot.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class UsersController(ICommandHandler<SignUp> signupHandler,
-                                 IQueryHandler<GetUser, UserDto> getUserHandler,
-                                 IQueryHandler<GetUsers, IEnumerable<UserDto>> getUsersHandler)
+                                 ICommandHandler<SignIn> signInHandler,
+                                 IQueryHandler<GetUser, UserDto?> getUserHandler,
+                                 IQueryHandler<GetUsers, IEnumerable<UserDto>> getUsersHandler,
+                                 ITokenStorage tokenStorage)
         : ControllerBase
     {
         [HttpPost]
@@ -30,7 +34,29 @@ namespace MySpot.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> Get()
-            => Ok(await getUsersHandler.HandleAsync(new GetUsers()));
+        public async Task<ActionResult<IEnumerable<UserDto>>> Get([FromQuery] GetUsers query)
+            => Ok(await getUsersHandler.HandleAsync(query));
+
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> GetMe()
+        {
+            if (string.IsNullOrWhiteSpace(HttpContext.User.Identity?.Name))
+                return NotFound();
+
+            var userId = Guid.Parse(HttpContext.User.Identity.Name);
+            var user = await getUserHandler.HandleAsync(new GetUser(userId));
+            if (user == null)
+                return NotFound();
+            return Ok(user);
+        }
+
+        [HttpPost("sign-in")]
+        public async Task<ActionResult<JwtDto>> Post(SignIn command)
+        {
+            await signInHandler.HandleAsync(command);
+            var jwt = tokenStorage.Get();
+            return Ok(jwt);
+        }
     }
 }

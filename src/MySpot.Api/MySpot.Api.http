@@ -1,17 +1,17 @@
-@MySpot.Api_HostAddress = http://localhost:5000
+@url = http://localhost:5000
 @reservationId = ace15ae8-44f3-4896-9aaf-b520e73269e9
 @parkingSpotId = 00000000-0000-0000-0000-000000000002
 @userId = 5b784299-561e-4e91-982a-444887a6f6a9
 
 ###
-GET {{MySpot.Api_HostAddress}}
+GET {{url}}
 
 ### 
-GET {{MySpot.Api_HostAddress}}/parking-spots
+GET {{url}}/parking-spots
 Accept: application/json
 
 ### 
-POST {{MySpot.Api_HostAddress}}/parking-spots/{{parkingSpotId}}/reservations/vehicle
+POST {{url}}/parking-spots/{{parkingSpotId}}/reservations/vehicle
 Content-Type: application/json
 
 {
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ### 
-POST {{MySpot.Api_HostAddress}}/parking-spots/reservations/cleaning
+POST {{url}}/parking-spots/reservations/cleaning
 Content-Type: application/json
 
 {
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ### 
-PUT {{MySpot.Api_HostAddress}}/parking-spots/reservations/{{reservationId}}
+PUT {{url}}/parking-spots/reservations/{{reservationId}}
 Content-Type: application/json
 
 {
@@ -39,10 +39,10 @@ Content-Type: application/json
 }
 
 ### 
-DELETE {{MySpot.Api_HostAddress}}/parking-spots/reservations/{{reservationId}}
+DELETE {{url}}/parking-spots/reservations/{{reservationId}}
 
 ###
-POST {{MySpot.Api_HostAddress}}/users
+POST {{url}}/users
 Content-Type: application/json
 
 {
@@ -54,7 +54,27 @@ Content-Type: application/json
 }
 
 ###
-GET {{MySpot.Api_HostAddress}}/users
+GET {{url}}/users
 
 ###
-GET {{MySpot.Api_HostAddress}}/users/{{userId}}
+GET {{url}}/users/{{userId}}
+
+###
+GET {{url}}/users/jwt
+
+###
+# @name sign_in
+POST {{url}}/users/sign-in
+Content-Type: application/json
+
+{
+    "email" : "user1@myspot.io",
+    "password": "secret"
+}
+
+###
+@accessToken = {{sign_in.response.body.accessToken}}
+
+###
+GET {{url}}/users/me
+Authorization: Bearer {{accessToken}}
