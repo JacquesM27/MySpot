@@ -46,18 +46,12 @@ POST {{url}}/users
 Content-Type: application/json
 
 {
-    "email" : "user1@myspot.io",
-    "username": "user1",
+    "email" : "admin@myspot.io",
+    "username": "admin",
     "password": "secret",
-    "fullname": "John Doe",
-    "role": "user"
+    "fullname": "John Doe Admin",
+    "role": "admin"
 }
-
-###
-GET {{url}}/users
-
-###
-GET {{url}}/users/{{userId}}
 
 ###
 GET {{url}}/users/jwt
@@ -68,7 +62,7 @@ POST {{url}}/users/sign-in
 Content-Type: application/json
 
 {
-    "email" : "user1@myspot.io",
+    "email" : "admin@myspot.io",
     "password": "secret"
 }
 
@@ -77,4 +71,11 @@ Content-Type: application/json
 
 ###
 GET {{url}}/users/me
+
+###
+GET {{url}}/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+
+###
+GET {{url}}/users
 Authorization: Bearer {{accessToken}}

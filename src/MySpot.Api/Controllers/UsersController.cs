@@ -25,6 +25,7 @@ namespace MySpot.Api.Controllers
         }
 
         [HttpGet("{userId:guid}")]
+        [Authorize(Policy = "is-admin")]
         public async Task<ActionResult<UserDto>> Get(Guid userId)
         {
             var user = await getUserHandler.HandleAsync(new GetUser(userId));
@@ -34,6 +35,7 @@ namespace MySpot.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "is-admin")]
         public async Task<ActionResult<IEnumerable<UserDto>>> Get([FromQuery] GetUsers query)
             => Ok(await getUsersHandler.HandleAsync(query));
 
