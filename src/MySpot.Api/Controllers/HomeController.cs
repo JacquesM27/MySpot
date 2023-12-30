@@ -16,6 +16,7 @@ namespace MySpot.Api.Controllers
             _appOptions = options.Value;
         }
 
+        [HttpGet]
         public ActionResult<string> Get() => _appOptions.Name;
     }
 }

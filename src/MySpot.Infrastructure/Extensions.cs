@@ -36,6 +36,16 @@ namespace MySpot.Infrastructure
             );
 
             services.AddCustomLogging();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.EnableAnnotations();
+                swagger.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "MySpot API",
+                    Version = "v1"
+                });
+            });
 
             return services;
         }
@@ -43,6 +53,14 @@ namespace MySpot.Infrastructure
         public static WebApplication UseInfrastructure(this WebApplication app)
         {
             app.UseMiddleware<ExceptionMIddleware>();
+            app.UseSwagger();
+            //app.UseSwaggerUI();
+            app.UseReDoc(doc =>
+            {
+                doc.RoutePrefix = "docs";
+                doc.SpecUrl("/swagger/v1/swagger.json");
+                doc.DocumentTitle = "MySpot API";
+            });
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();

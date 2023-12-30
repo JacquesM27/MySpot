@@ -5,6 +5,8 @@ using MySpot.Application.Commands;
 using MySpot.Application.DTO;
 using MySpot.Application.Queries;
 using MySpot.Application.Security;
+using MySpot.Core.ValueObjects;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MySpot.Api.Controllers
 {
@@ -26,6 +28,11 @@ namespace MySpot.Api.Controllers
 
         [HttpGet("{userId:guid}")]
         [Authorize(Policy = "is-admin")]
+        [SwaggerOperation("Get signle by user Id if exists","some description")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<UserDto>> Get(Guid userId)
         {
             var user = await getUserHandler.HandleAsync(new GetUser(userId));
