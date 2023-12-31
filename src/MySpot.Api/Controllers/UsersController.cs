@@ -22,8 +22,9 @@ namespace MySpot.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(SignUp command)
         {
-            await signupHandler.HandleAsync(command with { UserId = Guid.NewGuid() });
-            return NoContent();
+            command = command with { UserId = Guid.NewGuid() };
+            await signupHandler.HandleAsync(command);
+            return CreatedAtAction(nameof(Get), new {command.UserId}, null);
         }
 
         [HttpGet("{userId:guid}")]
