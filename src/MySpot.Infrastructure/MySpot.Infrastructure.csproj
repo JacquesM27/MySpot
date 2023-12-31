@@ -27,10 +27,11 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="MySpot.Unit.Tests" />
+		<InternalsVisibleTo Include="MySpot.Tests.Integration"/>
 	</ItemGroup>
-	
-    <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    </ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
 </Project>

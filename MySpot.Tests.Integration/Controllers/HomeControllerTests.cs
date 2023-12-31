@@ -3,7 +3,8 @@ using Xunit;
 
 namespace MySpot.Tests.Integration.Controllers
 {
-    public class HomeControllerTests : ControllerTestsBase
+    public class HomeControllerTests(OptionsProvider optionsProvider) 
+        : ControllerTestsBase(optionsProvider)
     {
         [Fact]
         public async Task GetBaseEndpoint_ForValidRequest_ShouldReturnOkStatusCode()
