@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MySpot.Tests.Integration
 {
@@ -7,10 +8,12 @@ namespace MySpot.Tests.Integration
     {
         public HttpClient Client { get; }
 
-        public MySpotTestApp()
+        public MySpotTestApp(Action<IServiceCollection> services)
         {
             Client = WithWebHostBuilder(builder =>
             {
+                if (services is not null)
+                    builder.ConfigureServices(services);
                 builder.UseEnvironment("test");
             }).CreateClient();
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using MySpot.Application.DTO;
 using MySpot.Application.Security;
 using MySpot.Infrastructure.Auth;
@@ -20,7 +21,7 @@ namespace MySpot.Tests.Integration.Controllers
             var authOptions = optionsProvider.Get<AuthOptions>("auth");
             _authenticator = new Authenticator(new Clock(), new OptionsWrapper<AuthOptions>(authOptions));
 
-            _app = new MySpotTestApp();
+            _app = new MySpotTestApp(ConfigureServices);
             Client = _app.Client;
         }
 
@@ -29,6 +30,10 @@ namespace MySpot.Tests.Integration.Controllers
             var jwt = _authenticator.CreateToken(userId, role);
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt.AccessToken);
             return jwt;
+        }
+
+        protected virtual void ConfigureServices(IServiceCollection services)
+        {
         }
     }
 }

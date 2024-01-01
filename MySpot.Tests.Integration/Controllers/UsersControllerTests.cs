@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using MySpot.Application.Commands;
 using MySpot.Application.DTO;
 using MySpot.Core.Entities;
+using MySpot.Core.Repositories;
 using MySpot.Core.ValueObjects;
 using MySpot.Infrastructure.Security;
 using MySpot.Infrastructure.Time;
@@ -15,6 +17,7 @@ namespace MySpot.Tests.Integration.Controllers
     {
         private readonly TestDatabase _testDb = new();
         private const string Password = "secret";
+        private IUserRepository _userRepository;
 
         public void Dispose() => _testDb.Dispose();
 
@@ -54,7 +57,7 @@ namespace MySpot.Tests.Integration.Controllers
         public async Task GetMe_ForAuthorizedUser_ShouldReturnOkStatusAndData()
         {
             // Arrange
-            var user = await CreateUserAsync();
+            var user = await CreateUserInDbAsync();
             Authorize(user.Id, user.Role);
 
             // Act
@@ -70,9 +73,24 @@ namespace MySpot.Tests.Integration.Controllers
             var clock = new Clock();
             var passwordManager = new PasswordManager(new PasswordHasher<User>());
             var user = new User(Guid.NewGuid(), "test-user1@myspot.io", "test-user1", passwordManager.Secure(Password), "John Doe", Role.User(), clock.Current());
+            await _userRepository.AddAsync(user);
+            return user;
+        }
+
+        private async Task<User> CreateUserInDbAsync()
+        {
+            var clock = new Clock();
+            var passwordManager = new PasswordManager(new PasswordHasher<User>());
+            var user = new User(Guid.NewGuid(), "test-user1@myspot.io", "test-user1", passwordManager.Secure(Password), "John Doe", Role.User(), clock.Current());
             await _testDb.DbContext.Users.AddAsync(user);
             await _testDb.DbContext.SaveChangesAsync();
             return user;
+        }
+
+        protected override void ConfigureServices(IServiceCollection services)
+        {
+            _userRepository = new TestUserRepository();
+            services.AddSingleton(_userRepository);
         }
     }
 }
